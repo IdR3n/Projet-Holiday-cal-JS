@@ -27,7 +27,30 @@ document.addEventListener('DOMContentLoaded', async function getFetes() {
             initialView: 'dayGridMonth',
             contentHeight: 600,
             height: 15000,
-            events: feteModifie
+            events: feteModifie,
+            headerToolbar: {
+                center: 'addEventButton'
+              },
+              customButtons: {
+                addEventButton: {
+                  text: 'add event...',
+                  click: function() {
+                    var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+                    var date = new Date(dateStr + 'T00:00:00'); // will be in local time
+          
+                    if (!isNaN(date.valueOf())) { // valid?
+                      calendar.addEvent({
+                        title: 'new event!',
+                        start: date,
+                        allDay: true
+                      });
+                      alert('Great. Now, update your database...');
+                    } else {
+                      alert('Are you sure?');
+                    }
+                  }
+                }
+              }
         });
         calendar.render();
 
@@ -61,16 +84,9 @@ document.addEventListener('DOMContentLoaded', async function getFetes() {
 
     let modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
-let btn = document.getElementById("modalButton");
 
 // Get the <span> element that closes the modal
 let span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
